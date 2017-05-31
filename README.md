@@ -1,2 +1,2 @@
-# traning
-ruby-cucumber
+# training
+ruby&amp;cucumber
