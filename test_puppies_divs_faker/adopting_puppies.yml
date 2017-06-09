@@ -1,0 +1,4 @@
+require '../support/pages/shopping_cart_page'
+require '../support/pages/checkout_page'
+require '../support/pages/details_page'
+require '../support/pages/home_page'
