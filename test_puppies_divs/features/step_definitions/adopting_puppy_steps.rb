@@ -14,7 +14,7 @@ When /^I click the Adopt Another Puppy button$/ do
   on(ShoppingCartPage).continue_shoping
 end
 
-And /^I click the Complete the Adoption button$/ do
+And /^I click the Complete the adoption button$/ do
   on(ShoppingCartPage).proceed_to_checkout
 end
 
@@ -58,16 +58,62 @@ And /^I complete the adoption with:$/ do |table|
   on(CheckoutPage).checkout(table.hashes.first) #`hashes` points that table and `first` that first row
 end
 
-
-And /^I complete the adoption of a puppy$/ do
-  on(CheckoutPage).checkout
-end
-
 When /^I complete the adoption using a Credit card$/ do
   on(CheckoutPage).checkout('pay_type' => 'Credit card')
 end
 
 When /^I complete the adoption$/ do
   on(CheckoutPage).checkout
+end
+
+And /^I complete the adoption of aa puppy$/ do
+  on(CheckoutPage).checkout
+end
+
+When /^I complete the adoption of a puppy$/ do
+=begin
+  on(HomePage).select_puppy
+  on(DetailsPage).add_to_cart
+  on(ShoppingCartPage).proceed_to_checkout
+  on(CheckoutPage).checkout
+=end
+  navigate_all
+end
+
+When /^I checkout leaving the name field blank$/ do
+=begin
+  on(HomePage).select_puppy
+  on(DetailsPage).add_to_cart
+  on(ShoppingCartPage).proceed_to_checkout
+  on(CheckoutPage).checkout('name' => '')
+=end
+  navigate_to(CheckoutPage).checkout('name' => '')
+end
+
+Then /^I should see the error message "([^\"]*)"$/ do |msg|
+  #on(CheckoutPage).error_messages.should include msg
+  @current_page.should have_error_message msg
+end
+
+Given /^I have a pending adoption for "([^\"]*)"$/ do |name|
+=begin
+  on(HomePage).select_puppy
+  on(DetailsPage).add_to_cart
+  on(ShoppingCartPage).proceed_to_checkout
+  on(CheckoutPage).checkout('name' => name)
+=end
+  navigate_to(CheckoutPage).checkout('name' => name)
+end
+
+When /^I process that adoption$/ do
+  visit(LandingPage)
+  on(LoginPage).login_to_system
+  on(LandingPage).adoptions
+  on(ProcessPuppyPage).process_first_puppy
+end
+
+When /^I navigate to some page but do something along way/ do
+  navigate_to(SomePageInTheMiddleOfTheRoute).do_something
+  continue_navigation_to(FinalPageInTheRoute).complete_this_step
 end
 

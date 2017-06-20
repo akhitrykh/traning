@@ -1,9 +1,11 @@
 class ShoppingCartPage
   include PageObject
 
+=begin
   NAME_COLUMN = 1
   SUBTOTAL_COLUMN = 3
   LINES_PER_PUPPY = 6
+=end
 
   button(:proceed_to_checkout, :value => 'Complete the Adoption')
   button(:continue_shoping, :value => 'Adopt Another Puppy')

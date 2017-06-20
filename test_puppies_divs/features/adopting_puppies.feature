@@ -68,8 +68,8 @@ Scenario: Adopting one puppy (Inline tables)
 Scenario: Adopting one puppy (Default Data)
   When I click the View Details button for "Hanna"
   And I click the Adopt Me button
-  And I click the Complete the Adoption button
-  And I complete the adoption of a puppy
+  And I click the Complete the adoption button
+  And I complete the adoption of aa puppy
   Then I should see "Thank you for adopting a puppy!"
 
 Scenario: Adopting a puppy using partial default data
@@ -85,4 +85,18 @@ Scenario: Adopting a puppy using all default data
   And I click the Complete the Adoption button
   And I complete the adoption
   Then I should see "Thank you for adopting a puppy"
+
+Scenario: Thank you message should be displayed
+  When I complete the adoption of a puppy
+  Then I should see "Thank you for adopting a puppy"
+
+Scenario: Name is a required field
+  When I checkout leaving the name field blank
+  Then I should see the error message "Name can't be blank"
+
+Scenario: Verify message when adoption is processed
+  Given I have a pending adoption for "Tom Jones"
+  When I process that adoption
+  Then I should see "Please thank Tom Jones for the order!"
+  # Message is "Please thank <adopter's name> for the order!"
 

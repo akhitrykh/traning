@@ -1,14 +1,17 @@
+require_relative 'side_menu_panel'
+
 class HomePage
   include PageObject
+  include SideMenuPanel
 
   page_url('http://puppies.herokuapp.com/')
 
   divs(:name,:class => 'name')
   buttons(:view_detail, :value => 'View Details')
 
-  def select_puppy(name)
+  def select_puppy(name = 'Brook')
     index = index_for(name)
-    view_detail_elements[index].click
+    button_element(:value => 'View Details', :index => index).click
   end
 
   private
